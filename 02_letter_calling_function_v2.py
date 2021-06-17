@@ -2,6 +2,7 @@
 
 # Letter calling function
 def letter_call(letter_library, alphabet_order):
+    # call letter from the alphabet in order
     num = alphabet_order % 26
     return letter_library[num-1]
 

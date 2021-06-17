@@ -2,6 +2,7 @@
 
 # Letter calling function
 def letter_call(letter_library, alphabet_order):
+    # print correctly indexed letter
     return letter_library[alphabet_order-1]
 
 

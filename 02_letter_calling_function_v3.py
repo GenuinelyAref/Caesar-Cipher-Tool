@@ -2,14 +2,17 @@
 
 # Letter calling function
 def letter_call(letter_library, alphabet_order, case):
-    letter = letter_library[alphabet_order % 26]
+    # find letter in english alphabet
+    letter = letter_library[(alphabet_order-1) % 26]
     if case == "uppercase":
+        # uppercase letter
         return letter.upper()
     elif case == "lowercase":
+        # lowercase letter
         return letter
 
 
-# lowercase english letters
+# english letters
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
                      "t", "u", "v", "w", "x", "y", "z"]
 

@@ -32,7 +32,7 @@ lowercase_letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
 uppercase_letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
                      "T", "U", "V", "W", "X", "Y", "Z"]
 # special characters
-special_chars = [",", " ", ".", "\"", "\'", "?", "!", "(", ")", ":", ";", "-", "_", "/", "\\"]
+special_chars = [",", " ", ".", "\"", "”", "“", "'", "‘", "’", "?", "!", "(", ")", ":", ";", "-", "_", "/", "\\"]
 # All valid characters
 all_chars = lowercase_letters + uppercase_letters + special_chars
 

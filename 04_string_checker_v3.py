@@ -3,8 +3,6 @@
 def str_checker(valid_chars):
     # take input
     text = input("Enter a text here: ")
-    # change input text to lowercase
-    text = text.lower()
     letter_chars_location = []
     # check that all characters are valid/permitted
     for i in range(0, len(text)):

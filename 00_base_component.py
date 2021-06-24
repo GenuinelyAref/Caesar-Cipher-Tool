@@ -1,7 +1,9 @@
 # Caesar Cipher function
 
-# FUNCTIONS
+# Libraries
 
+
+# FUNCTIONS
 # letter calling function
 def letter_call(letter_library, alphabet_order, case):
     # find letter in english alphabet
@@ -54,6 +56,11 @@ def str_checker(valid_chars):
 
 
 # Lists/variables
-
+# english letters
+letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+                     "t", "u", "v", "w", "x", "y", "z"]
 
 # Main routine
+# Main routine
+letter_indexes = str_checker(letters)
+print(letter_indexes)

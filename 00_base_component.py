@@ -5,9 +5,9 @@
 
 # FUNCTIONS
 # letter calling function
-def letter_call(letter_library, alphabet_order, case):
+def letter_call(var_letter_library, alphabet_order, case):
     # find letter in english alphabet
-    letter = letter_library[(alphabet_order-1) % 26]
+    letter = var_letter_library[(alphabet_order-1) % 26]
     if case == "uppercase":
         # uppercase letter
         return letter.upper()
@@ -30,7 +30,7 @@ def not_blank(prompt, error_message):
 
 
 # string checker function
-def str_checker(valid_chars):
+def str_checker(var_letter_library):
     # take input
     text = input("Enter a text here: ")
     letter_chars_location = []
@@ -39,7 +39,7 @@ def str_checker(valid_chars):
         current_char = text[i]
         try:
             # attempt to find the character in the list of valid characters
-            valid_chars.index(current_char)
+            var_letter_library.index(current_char)
             # if it's a letter, then add its index in the text to this list
             letter_chars_location.append(i)
         except ValueError:

@@ -47,11 +47,6 @@ def str_checker(var_letter_library):
             pass
     # line break
     print("\n")
-    # print all letters & their indexes from the given text (for testing purposes)
-    for j in range(0, len(letter_chars_location)):
-        current_index = letter_chars_location[j]
-        print("There is a letter ({}), at index {} of the text given".format(text[current_index], current_index))
-    # return list with the location of all letters in the given text
     return letter_chars_location
 
 
@@ -78,4 +73,3 @@ letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
 # Main routine
 # Main routine
 letter_indexes = str_checker(letters)
-print(letter_indexes)

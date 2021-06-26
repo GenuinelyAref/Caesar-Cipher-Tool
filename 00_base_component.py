@@ -33,10 +33,11 @@ def not_blank(prompt, error_message):
 def str_checker(var_letter_library):
     # take input
     text = input("Enter a text here: ")
+    var_text = text.lower()
     letter_chars_location = []
     # check that all characters are valid/permitted
-    for i in range(0, len(text)):
-        current_char = text[i]
+    for i in range(0, len(var_text)):
+        current_char = var_text[i]
         try:
             # attempt to find the character in the list of valid characters
             var_letter_library.index(current_char)
@@ -73,3 +74,4 @@ letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
 # Main routine
 # Main routine
 letter_indexes = str_checker(letters)
+print(letter_indexes)

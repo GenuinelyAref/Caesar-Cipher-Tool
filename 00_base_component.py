@@ -66,6 +66,11 @@ def min_input(raw_input, var_letter_library):
         return True
 
 
+# Function that finds letter order in alphabet and returns it
+def letter_order(letter, var_letter_library):
+    return var_letter_library.index(letter.lower())+1
+
+
 # Lists/variables
 # english letters
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",

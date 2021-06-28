@@ -20,7 +20,7 @@ def str_checker(var_text, var_letter_library):
     return letter_chars_location
 
 
-def encode_with_key(var_text, var_letter_indexes, key, var_letter_library):
+def encode_with_key(var_text, var_letter_indexes, var_key, var_letter_library):
     # convert var_text to list
     var_text_list = list(var_text)
     # Set variable equal to number of letters (chars to encrypt/decrypt)
@@ -32,11 +32,11 @@ def encode_with_key(var_text, var_letter_indexes, key, var_letter_library):
             letter_index = var_letter_library.index(current_char)
             # letter is now known to be lowercase
             # replace original character with new encrypted character
-            new_char = var_letter_library[letter_index+key]
+            new_char = var_letter_library[letter_index+var_key]
         except ValueError:
             # letter is now known to be uppercase
             letter_index = var_letter_library.index(current_char.lower())
-            new_char = var_letter_library[letter_index+key].upper()
+            new_char = var_letter_library[letter_index+var_key].upper()
         var_text_list[var_letter_indexes[i]] = new_char
     # convert list back into a string
     encoded_text = ""
@@ -49,9 +49,11 @@ def encode_with_key(var_text, var_letter_indexes, key, var_letter_library):
 # english letters
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
                      "t", "u", "v", "w", "x", "y", "z"]
-text = "I love cookies"
+text = "123numbers456"
+key = 55
 
 # Main routine
 x = str_checker(text, letters)
-b = encode_with_key(text, x, 2, letters)
-print(b)
+b = encode_with_key(text, x, key, letters)
+print("The text \033[1m\"{}\"\033[0m encrypted using a key of \033[1m{}\033[0m is: \033[1m\"{}\"\033[0m"
+      .format(text, key, b))

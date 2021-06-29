@@ -32,11 +32,13 @@ def encode_with_key(var_text, var_letter_indexes, var_key, var_letter_library):
             letter_index = var_letter_library.index(current_char)
             # letter is now known to be lowercase
             # replace original character with new encrypted character
-            new_char = var_letter_library[letter_index+var_key]
+            calling_index = (letter_index+var_key) % 26
+            new_char = var_letter_library[calling_index]
         except ValueError:
             # letter is now known to be uppercase
             letter_index = var_letter_library.index(current_char.lower())
-            new_char = var_letter_library[letter_index+var_key].upper()
+            calling_index = (letter_index + var_key) % 26
+            new_char = var_letter_library[calling_index].upper()
         var_text_list[var_letter_indexes[i]] = new_char
     # convert list back into a string
     encoded_text = ""
@@ -49,8 +51,8 @@ def encode_with_key(var_text, var_letter_indexes, var_key, var_letter_library):
 # english letters
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
                      "t", "u", "v", "w", "x", "y", "z"]
-text = "123numbers456"
-key = 55
+text = "? special ! characters _ + ="
+key = 26
 
 # Main routine
 x = str_checker(text, letters)

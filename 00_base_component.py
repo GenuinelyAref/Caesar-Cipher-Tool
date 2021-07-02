@@ -1,9 +1,15 @@
 # Caesar Cipher function
 
 # Libraries
+import random
 
 
 # FUNCTIONS
+# random key-picking function
+def random_key_pick():
+    return random.randint(1, 25)
+
+
 # letter calling function
 def letter_call(var_letter_library, alphabet_order, case):
     # find letter in english alphabet

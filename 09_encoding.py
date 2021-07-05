@@ -44,6 +44,7 @@ def str_checker(var_text, var_letter_library):
     return letter_chars_location
 
 
+# Function to encode text using key
 def encode_text(var_text, var_letter_indexes, var_key, var_letter_library):
     # convert var_text to list
     var_text_list = list(var_text)

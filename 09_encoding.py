@@ -76,7 +76,7 @@ def encode_text(var_text, var_letter_indexes, var_key, var_letter_library):
 # english letters
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
                      "t", "u", "v", "w", "x", "y", "z"]
-text = "Text"
+text = "ZXMFQXIP & ? pmbzfxi ! zexoxzqbop _ + ="
 
 
 for testing_purposes in range(0, 5):
@@ -91,7 +91,7 @@ for testing_purposes in range(0, 5):
               "The text \033[1m\"{}\"\033[0m encrypted using a key of \033[1m{}\033[0m is: \033[1m\"{}\"\033[0m"
               .format(key, text, key, b))
     else:
-        key = 7
+        key = 3
         x = str_checker(text, letters)
         b = encode_text(text, x, key, letters)
         print("The text \033[1m\"{}\"\033[0m encrypted using a key of \033[1m{}\033[0m is: \033[1m\"{}\"\033[0m"

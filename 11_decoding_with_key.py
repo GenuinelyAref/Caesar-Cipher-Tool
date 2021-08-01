@@ -1,4 +1,4 @@
-# Decoding letters without a provided key (random key)
+# Decoding letters with key
 # import libraries
 import random
 

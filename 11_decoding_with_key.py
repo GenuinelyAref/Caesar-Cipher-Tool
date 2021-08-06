@@ -1,11 +1,4 @@
 # Decoding letters with key
-# import libraries
-import random
-
-
-# random key-picking function
-def random_key_pick():
-    return random.randint(1, 25)
 
 
 # Function that checks that input given is either yes or no

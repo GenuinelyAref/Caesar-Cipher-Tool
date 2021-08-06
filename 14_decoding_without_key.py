@@ -27,8 +27,8 @@ def likelihood_of_outcome(letter, var_standard_letters, var_standard_values):
 
 
 # Letter frequency analysis tool
-def letter_frequency(textt, var_letter_library):
-    var_text = textt.lower()
+def letter_frequency(var_text, var_letter_library):
+    var_text = var_text.lower()
     letter_frequency_dict = {}
     for i in var_text:
         keys = letter_frequency_dict.keys()
@@ -70,19 +70,17 @@ def str_checker(var_text, var_letter_library):
 def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_most_frequent_letter,
                        var_standard_freq_letters):
     decoded_text = ""
+    var_key = 0
     # Set variable equal to number of letters (chars to decrypt/decrypt)
     num_of_valid_chars = len(var_letter_indexes)
-
     # decoding without key part:
     correct = False
     letter_count = 0
     while not correct:
         a = var_letter_library.index(var_most_frequent_letter)
         b = var_letter_library.index(var_standard_freq_letters[letter_count])
-        var_key = 26-(b-a)
+        var_key = (26-(b-a)) % 26
         letter_count += 1
-        # STOPPED HERE
-        # ######################
         # convert var_text to list
         var_text_list = list(var_text)
         # repeat loop as many time as there are letters in the string
@@ -92,26 +90,26 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
                 letter_index = var_letter_library.index(current_char)
                 # letter is now known to be lowercase
                 # replace original character with new decrypted character
-                calling_index = ((letter_index) -(var_key)) % 26
+                calling_index = (letter_index-var_key) % 26
                 new_char = var_letter_library[calling_index]
             except ValueError:
                 # letter is now known to be uppercase
                 letter_index = var_letter_library.index(current_char.lower())
-                calling_index = ((letter_index) -(var_key)) % 26
+                calling_index = (letter_index - var_key) % 26
                 new_char = var_letter_library[calling_index].upper()
             var_text_list[var_letter_indexes[i]] = new_char
         # convert list back into a string
         decoded_text = ""
         for i in range(0, len(var_text_list)):
             decoded_text += var_text_list[i]
-        correct_key = yes_no_checker("Is this the correct text?\n\n{}".format(decoded_text), "yay",
-                                     "oops, trying again", "Please enter yes/no")
+        correct_key = yes_no_checker("Is this the correct text?\033[1m\n{}\033[0m\n\nYes/no: ".format(decoded_text),
+                                     "Success!", "\033[3mtrying again\033[0m", "Please enter yes/no")
         if correct_key:
             break
         else:
             continue
     # return decoded string to user
-    return decoded_text
+    return [decoded_text, var_key]
 
 
 # english letters
@@ -126,8 +124,8 @@ standard_freq_letters = ["e", "t", "a", "o", "i", "n", "s", "h", "r", "d", "l", 
 standard_freq_values = [12.702, 9.056, 8.167, 7.507, 6.966, 6.749, 6.327, 6.094, 5.987, 4.253, 4.025, 2.782, 2.758,
                         2.406, 2.36, 2.228, 2.015, 1.974, 1.929, 1.492, 0.978, 0.772, 0.153, 0.15, 0.095, 0.074]
 
-# message (key = 13)
-text = "vw W oa obrm obr vck qob W rc hvwg obr hvoh kwhvcih ogywbu tcf giddcfh tfca am gwpzwbu"
+
+text = "Mby qily alyyh fcjmncwe fcey u zumbcih cwih."
 text_letter_locations = str_checker(text, letters)
 
 # Main routine
@@ -137,4 +135,5 @@ likelihood = likelihood_of_outcome("x", standard_freq_letters, standard_freq_val
 most_frequent_letter = letter_frequency(text, letters)
 # try to decode the key
 n = decode_without_key(text, text_letter_locations, letters, most_frequent_letter, standard_freq_letters)
-print(n)
+print("\n\033[1mKey: \033[0m\033[3m{}\033[0m\n\n\033[0m\033[1mOriginal text:\033[0m\n\033[3m{}\033[0m\n\n\033["
+      "1mDecoded text:\033[0m\n\033[3m{}\033[0m".format(n[1], text, n[0]))

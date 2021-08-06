@@ -1,4 +1,4 @@
-# Caesar Cipher function
+# Caesar Cipher functions
 
 # Libraries
 import random
@@ -225,6 +225,23 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
     return decoded_text
 
 
+# Program instructions
+def instructions(condition_met):
+    instructions_text = "| To use this tool, you will need to have a very basic understanding of Caesar Ciphers.\n" \
+                   "| If you are unfamiliar with the concept, I highly recommend visiting this website\n" \
+                   "| (https://csfieldguide.org.nz/en/chapters/coding-encryption/substitution-ciphers/)\n" \
+                   "| and reading CSFG's article on Caesar Ciphers. " \
+                   "\n\n| This tool can encode/decode a text, with or without a given key. This program\n" \
+                   "| contains an intelligent ""letter frequency analysis tool, that is capable of decoding\n" \
+                   "| any text without a given key in the least theoretical possible number of steps. You\n" \
+                   "| will be required to enter the following information:\n\n| 1) text (can contain numbers, " \
+                   "punctuation etc...)\n| 2) a key (if you have one)\n| 3) whether you want to encode or decode\n"
+    if not condition_met:
+        print(instructions_text)
+    else:
+        print("\033[3mSkipping instructions >>\033[0m")
+
+
 # Lists/variables
 # english letters
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
@@ -237,4 +254,4 @@ standard_freq_values = [12.702, 9.056, 8.167, 7.507, 6.966, 6.749, 6.327, 6.094,
                         2.406, 2.36, 2.228, 2.015, 1.974, 1.929, 1.492, 0.978, 0.772, 0.153, 0.15, 0.095, 0.074]
 
 
-# Main routine
+# MAIN ROUTINE

@@ -151,7 +151,7 @@ def letter_frequency(var_text, var_letter_library):
 
 
 # Function that encodes text using key
-def encode_text(var_text, var_letter_indexes, var_key, var_letter_library):
+def encode_decode_with_key(var_text, var_letter_indexes, var_key, var_letter_library):
     # convert var_text to list
     var_text_list = list(var_text)
     # Set variable equal to number of letters (chars to encrypt/decrypt)
@@ -177,35 +177,6 @@ def encode_text(var_text, var_letter_indexes, var_key, var_letter_library):
         encoded_text += var_text_list[i]
     # return encoded string to user
     return [encoded_text, var_key]
-
-
-# Function to decode text using key
-def decode_text(var_text, var_letter_indexes, var_key, var_letter_library):
-    decoded_text = ""
-    # convert var_text to list
-    var_text_list = list(var_text)
-    # Set variable equal to number of letters (chars to decrypt/decrypt)
-    num_of_valid_chars = len(var_letter_indexes)
-    # repeat loop as many time as there are letters in the string
-    for i in range(0, num_of_valid_chars):
-        current_char = var_text_list[var_letter_indexes[i]]
-        try:
-            letter_index = var_letter_library.index(current_char)
-            # letter is now known to be lowercase
-            # replace original character with new decrypted character
-            calling_index = (letter_index - var_key) % 26
-            new_char = var_letter_library[calling_index]
-        except ValueError:
-            # letter is now known to be uppercase
-            letter_index = var_letter_library.index(current_char.lower())
-            calling_index = (letter_index - var_key) % 26
-            new_char = var_letter_library[calling_index].upper()
-        var_text_list[var_letter_indexes[i]] = new_char
-    # convert list back into a string
-    for i in range(0, len(var_text_list)):
-        decoded_text += var_text_list[i]
-    # return decoded string to user
-    return [decoded_text, var_key]
 
 
 # Function to decode text using key
@@ -335,7 +306,7 @@ if user_has_key:
 
 if text_function == "decode":
     if user_has_key:
-        result = decode_text(user_input, str_checker(user_input, letters), key, letters)
+        result = encode_decode_with_key(user_input, str_checker(user_input, letters), -key, letters)
     else:
         result = decode_without_key(user_input, str_checker(user_input, letters), letters,
                                     letter_frequency(user_input, letters), standard_freq_letters)
@@ -343,10 +314,10 @@ if text_function == "decode":
           "{}\033[0m\n\n | \033[1mDecoded text:\033[0m\n | \033[3m{}\033[0m".format(result[1], user_input, result[0]))
 else:
     if user_has_key:
-        result = encode_text(user_input, str_checker(user_input, letters), key, letters)
+        result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
     else:
         key = random_key_pick()
         print("\033[3mRandom key generated\033[0m")
-        result = encode_text(user_input, str_checker(user_input, letters), key, letters)
+        result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
     print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
           "{}\033[0m\n\n | \033[1mEncoded text:\033[0m\n | \033[3m{}\033[0m".format(result[1], user_input, result[0]))

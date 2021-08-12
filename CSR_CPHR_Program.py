@@ -268,56 +268,73 @@ print("\033[1mWelcome to Caesar Cipher Tool\033[0m\n\n\n\n")
 want_instructions = yes_no_checker("Have you used this program before?\nYes/no: ", "", "", "Please enter yes/no")
 instructions(want_instructions)
 
-# Check that there is something to encode/decode
-user_text_valid = False
-# If not, then keep requesting new text
-while not user_text_valid:
-    # explain why the prompt is repeated
-    print("\n\n\033[3mPlease ensure that your text contains at least 1 letter\033[0m")
-    # repeat prompt
-    user_input = input("Enter you text here: ")
-    # check that the text contains at least one letter
-    user_text_valid = min_input(user_input, letters)
+want_to_run_program_again = True
+while want_to_run_program_again:
+    # Check that there is something to encode/decode
+    user_text_valid = False
+    # If not, then keep requesting new text
+    while not user_text_valid:
+        # explain why the prompt is repeated
+        print("\n\n\033[3mPlease ensure that your text contains at least 1 letter\033[0m")
+        # repeat prompt
+        user_input = input("Enter you text here: ")
+        # check that the text contains at least one letter
+        user_text_valid = min_input(user_input, letters)
 
-# Ask user if they want to encode or decode
-text_function = input("\n\033[1mDo you want to encode or decode?\033[0m\nType here: ")
-# If answer is not valid, ask again
-while text_function.lower() != "encode" and text_function.lower() != "decode":
-    # error saying why it's invalid
-    print("\nSorry, that is not a valid answer. Type 'encode' or 'decode'\n")
-    # repeat prompt
-    text_function = input("\033[1mDo you want to encode or decode?\033[0m\nType here: ")
-# change the function to lowercase
-text_function = text_function.lower()
+    # Ask user if they want to encode or decode
+    text_function = input("\n\033[1mDo you want to encode or decode?\033[0m\nType here: ")
+    # If answer is not valid, ask again
+    while text_function.lower() != "encode" and text_function.lower() != "decode":
+        # error saying why it's invalid
+        print("\nSorry, that is not a valid answer. Type 'encode' or 'decode'\n")
+        # repeat prompt
+        text_function = input("\033[1mDo you want to encode or decode?\033[0m\nType here: ")
+    # change the function to lowercase
+    text_function = text_function.lower()
 
-# Ask if user has key
-user_has_key = yes_no_checker("\n\033[1mDo you have a key to provide?\033[0m\nYes/no: ", "",
-                              "\n\033[3mNo key given\033[0m", "Please enter yes/no")
-
-# If user has key, ask them for it
-if user_has_key:
-    valid_key = False
-    while not valid_key:
-        print("\n\033[3mMake sure your key is an integer\033[0m")
-        key = input("Enter your key here: ")
-        valid_key = integer_check(key)
-    key = int(key)
-
-
-if text_function == "decode":
+    # Ask if user has key
+    user_has_key = yes_no_checker("\n\033[1mDo you have a key to provide?\033[0m\nYes/no: ", "",
+                                  "\n\033[3mNo key given\033[0m", "Please enter yes/no")
+    # If user has key, ask them for it
     if user_has_key:
-        result = encode_decode_with_key(user_input, str_checker(user_input, letters), -key, letters)
+        valid_key = False
+        while not valid_key:
+            print("\n\033[3mMake sure your key is an integer\033[0m")
+            key = input("Enter your key here: ")
+            valid_key = integer_check(key)
+        key = int(key)
+
+    # is user wants to decode text
+    if text_function == "decode":
+        # if user has key
+        if user_has_key:
+            # use general encode/decode function
+            result = encode_decode_with_key(user_input, str_checker(user_input, letters), -key, letters)
+        # if user doesn't have key
+        else:
+            # use special function
+            result = decode_without_key(user_input, str_checker(user_input, letters), letters,
+                                        letter_frequency(user_input, letters), standard_freq_letters)
+        # print results
+        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
+              "{}\033[0m\n\n | \033[1mDecoded text:\033[0m\n | \033[3m{}\033[0m".format(result[1], user_input, result[0]))
+    # is user wants to encode text
     else:
-        result = decode_without_key(user_input, str_checker(user_input, letters), letters,
-                                    letter_frequency(user_input, letters), standard_freq_letters)
-    print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
-          "{}\033[0m\n\n | \033[1mDecoded text:\033[0m\n | \033[3m{}\033[0m".format(result[1], user_input, result[0]))
-else:
-    if user_has_key:
-        result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
-    else:
-        key = random_key_pick()
-        print("\033[3mRandom key generated\033[0m")
-        result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
-    print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
-          "{}\033[0m\n\n | \033[1mEncoded text:\033[0m\n | \033[3m{}\033[0m".format(result[1], user_input, result[0]))
+        # if user has key
+        if user_has_key:
+            # user general encode/decode function
+            result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
+        # if user doesn't have key
+        else:
+            # pick random key
+            key = random_key_pick()
+            print("\033[3mRandom key generated\033[0m")
+            # use general encode/decode function
+            result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
+        # print results
+        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
+              "{}\033[0m\n\n | \033[1mEncoded text:\033[0m\n | \033[3m{}\033[0m".format(result[1], user_input, result[0]))
+    want_to_run_program_again = yes_no_checker("\n\n\033[1mDo you want to run this program again?\033[0m\nYes/no: ",
+                                               "\033[3mRe-running program\033[0m",
+                                               "\033[3mThank you for using my program :)\033[0m",
+                                               "Please enter yes/no")

@@ -182,7 +182,6 @@ def encode_decode_with_key(var_text, var_letter_indexes, var_key, var_letter_lib
 # Function to decode text using key
 def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_most_frequent_letter,
                        var_standard_freq_letters):
-    decoded_text = ""
     var_key = 0
     # Set variable equal to number of letters (chars to decrypt/decrypt)
     num_of_valid_chars = len(var_letter_indexes)
@@ -192,6 +191,7 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
     most_frequent_letter_index = var_letter_library.index(var_most_frequent_letter)
     # repeat until user claims that the string is decoded correctly
     while not correct:
+        decoded_text = ""
         # find index of the next-most frequent letter's index in the standard letter frequency table
         next_most_standard_frequent_letter_index = var_letter_library.index(var_standard_freq_letters[letter_count])
         # set the key equal to the difference between both indexes

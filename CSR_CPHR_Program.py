@@ -232,7 +232,8 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
 
 # Program instructions
 def instructions(var_condition_met):
-    instructions_text = " | To use this tool, you will need to have a very basic understanding of Caesar Ciphers.\n" \
+    instructions_text = "\033[1m | Here's a basic set of instructions on how to use this program: \033[0m\n\n" \
+                   " | To use this tool, you will need to have a very basic understanding of Caesar Ciphers.\n" \
                    " | If you are unfamiliar with the concept, I highly recommend visiting this website\n" \
                    " | (https://csfieldguide.org.nz/en/chapters/coding-encryption/substitution-ciphers/)\n" \
                    " | and reading CSFG's article on Caesar Ciphers. " \

@@ -88,7 +88,7 @@ def yes_no_checker(var_prompt, var_proceed_affirmative, var_proceed_negative):
             return False
         else:
             # print error message + don't exit loop
-            print("\033[3mPlease enter yes/no\033[0m")
+            print("\n\033[3mPlease enter yes/no\033[0m")
 
 
 # Function that checks that the string given contains the minimal characters needed for the program to work correctly

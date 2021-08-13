@@ -70,7 +70,7 @@ def str_checker(var_text, var_letter_library):
 
 
 # Function that checks that input given is either yes or no - repeats prompt if neither answer is given
-def yes_no_checker(var_prompt, var_proceed_affirmative, var_proceed_negative, var_error_message):
+def yes_no_checker(var_prompt, var_proceed_affirmative, var_proceed_negative):
     valid_two = False
     # repeat until answer given is either 'yes' or 'no'
     while not valid_two:
@@ -88,7 +88,7 @@ def yes_no_checker(var_prompt, var_proceed_affirmative, var_proceed_negative, va
             return False
         else:
             # print error message + don't exit loop
-            print(var_error_message)
+            print("\033[3mPlease enter yes/no\033[0m")
 
 
 # Function that checks that the string given contains the minimal characters needed for the program to work correctly
@@ -182,6 +182,7 @@ def encode_decode_with_key(var_text, var_letter_indexes, var_key, var_letter_lib
 # Function to decode text using key
 def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_most_frequent_letter,
                        var_standard_freq_letters):
+    decoded_text = ""
     var_key = 0
     # Set variable equal to number of letters (chars to decrypt/decrypt)
     num_of_valid_chars = len(var_letter_indexes)
@@ -219,7 +220,7 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
         for i in range(0, len(var_text_list)):
             decoded_text += var_text_list[i]
         correct_key = yes_no_checker("Is this the correct text?\033[1m\n{}\033[0m\n\nYes/no: ".format(decoded_text),
-                                     "Success!", "\033[3m\ntrying again\033[0m\n", "Please enter yes/no")
+                                     "Success!", "\033[3m\ntrying again\033[0m\n")
         # if decoded text is claimed correct by the user, break loop
         if correct_key:
             break
@@ -266,7 +267,7 @@ key = 0
 # welcome message
 print("\033[1mWelcome to Caesar Cipher Tool\033[0m\n\n\n\n")
 # display/skip instructions
-want_instructions = yes_no_checker("Have you used this program before?\nYes/no: ", "", "", "Please enter yes/no")
+want_instructions = yes_no_checker("Have you used this program before?\nYes/no: ", "", "")
 instructions(want_instructions)
 
 want_to_run_program_again = True
@@ -295,7 +296,7 @@ while want_to_run_program_again:
 
     # Ask if user has key
     user_has_key = yes_no_checker("\n\033[1mDo you have a key to provide?\033[0m\nYes/no: ", "",
-                                  "\n\033[3mNo key given\033[0m", "Please enter yes/no")
+                                  "\n\033[3mNo key given\033[0m")
     # If user has key, ask them for it
     if user_has_key:
         valid_key = False
@@ -318,7 +319,8 @@ while want_to_run_program_again:
                                         letter_frequency(user_input, letters), standard_freq_letters)
         # print results
         print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
-              "{}\033[0m\n\n | \033[1mDecoded text:\033[0m\n | \033[3m{}\033[0m".format(result[1], user_input, result[0]))
+              "{}\033[0m\n\n | \033[1mDecoded text:\033[0m\n | \033[3m{}\033[0m"
+              .format(result[1], user_input, result[0]))
     # is user wants to encode text
     else:
         # if user has key
@@ -334,8 +336,8 @@ while want_to_run_program_again:
             result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
         # print results
         print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
-              "{}\033[0m\n\n | \033[1mEncoded text:\033[0m\n | \033[3m{}\033[0m".format(result[1], user_input, result[0]))
+              "{}\033[0m\n\n | \033[1mEncoded text:\033[0m\n | \033[3m{}\033[0m"
+              .format(result[1], user_input, result[0]))
     want_to_run_program_again = yes_no_checker("\n\n\033[1mDo you want to run this program again?\033[0m\nYes/no: ",
                                                "\033[3mRe-running program\033[0m",
-                                               "\033[3mThank you for using my program :)\033[0m",
-                                               "Please enter yes/no")
+                                               "\033[3mThank you for using my program :)\033[0m")

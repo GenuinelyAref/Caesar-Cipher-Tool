@@ -25,7 +25,7 @@ def integer_check(var_num):
 # letter calling function - to call letters by their order in the alphabet
 def letter_call(var_letter_library, var_alphabet_order, var_case):
     # find letter in english alphabet
-    letter = var_letter_library[(var_alphabet_order-1) % 26]
+    letter = var_letter_library[(var_alphabet_order - 1) % 26]
     if var_case == "uppercase":
         # uppercase letter
         return letter.upper()
@@ -114,19 +114,14 @@ def min_input(var_raw_input, var_letter_library):
 
 # Function that finds letter order in alphabet and returns it
 def letter_order(var_letter, var_letter_library):
-    return var_letter_library.index(var_letter.lower())+1
+    return var_letter_library.index(var_letter.lower()) + 1
 
 
 # Function that calculates the likelihood of the outcome
 def likelihood_of_outcome(var_letter, var_standard_letters, var_standard_values):
     # Find the order of the letter in the standard letter frequency table
     var_index = var_standard_letters.index(var_letter)
-    var_sum = 0
-    # Add all the frequency values up to the index of that letter
-    for i in range(0, var_index + 1):
-        var_sum += var_standard_values[i]
-    # Calculate the percentage and round to 3 sf
-    percentage = round(100 - var_sum, 3)
+    percentage = var_standard_values[var_index]
     return percentage
 
 
@@ -163,7 +158,7 @@ def encode_decode_with_key(var_text, var_letter_indexes, var_key, var_letter_lib
             letter_index = var_letter_library.index(current_char)
             # letter is now known to be lowercase
             # replace original character with new encrypted character
-            calling_index = (letter_index+var_key) % 26
+            calling_index = (letter_index + var_key) % 26
             new_char = var_letter_library[calling_index]
         except ValueError:
             # letter is now known to be uppercase
@@ -190,18 +185,18 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
     # Set variable equal to number of letters (chars to decrypt/decrypt)
     num_of_valid_chars = len(var_letter_indexes)
     correct = False
-    letter_count = 0
+    letter_count = -1
     # find index of the most frequent letter
     most_frequent_letter_index = var_letter_library.index(var_most_frequent_letter)
     # repeat until user claims that the string is decoded correctly
     while not correct:
+        letter_count += 1
         decoded_text = ""
         # find index of the next-most frequent letter's index in the standard letter frequency table
         next_most_standard_frequent_letter_index = var_letter_library.index(var_standard_freq_letters[letter_count])
         # set the key equal to the difference between both indexes
         var_key = (26 - (next_most_standard_frequent_letter_index - most_frequent_letter_index)) % 26
         # to increase the progression of standard letter table values
-        letter_count += 1
         # convert var_text to list
         var_text_list = list(var_text)
         # repeat loop as many time as there are letters in the string
@@ -231,21 +226,21 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
         else:
             continue
     # return decoded string to user
-    return [decoded_text, var_key]
+    return [decoded_text, var_key, var_standard_freq_letters[letter_count]]
 
 
 # Program instructions
 def instructions(var_condition_met):
     instructions_text = "\033[1m | Here's a basic set of instructions on how to use this program: \033[0m\n\n" \
-                   " | To use this tool, you will need to have a very basic understanding of Caesar Ciphers.\n" \
-                   " | If you are unfamiliar with the concept, I highly recommend visiting this website\n" \
-                   " | (https://csfieldguide.org.nz/en/chapters/coding-encryption/substitution-ciphers/)\n" \
-                   " | and reading CSFG's article on Caesar Ciphers. " \
-                   "\n\n | This tool can encode/decode a text, with or without a given key. This program\n" \
-                   " | contains an intelligent ""letter frequency analysis tool, that is capable of decoding\n" \
-                   " | any text without a given key in the least theoretical possible number of steps. You\n" \
-                   " | will be required to enter the following information:\n\n | 1) text (can contain numbers, " \
-                   "punctuation etc...)\n | 2) a key (if you have one)\n | 3) whether you want to encode or decode"
+                        " | To use this tool, you will need to have a very basic understanding of Caesar Ciphers.\n" \
+                        " | If you are unfamiliar with the concept, I highly recommend visiting this website\n" \
+                        " | (https://csfieldguide.org.nz/en/chapters/coding-encryption/substitution-ciphers/)\n" \
+                        " | and reading CSFG's article on Caesar Ciphers. " \
+                        "\n\n | This tool can encode/decode a text, with or without a given key. This program\n" \
+                        " | contains an intelligent ""letter frequency analysis tool, that is capable of decoding\n" \
+                        " | any text without a given key in the least theoretical possible number of steps. You\n" \
+                        " | will be required to enter the following information:\n\n | 1) text (can contain numbers, " \
+                        "punctuation etc...)\n | 2) a key (if you have one)\n | 3) whether you want to encode or decode"
     if not var_condition_met:
         print(instructions_text)
     else:
@@ -255,7 +250,7 @@ def instructions(var_condition_met):
 # Lists/variables
 # english letters
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
-                     "t", "u", "v", "w", "x", "y", "z"]
+           "t", "u", "v", "w", "x", "y", "z"]
 # Standard letter frequency table (letters)
 standard_freq_letters = ["e", "t", "a", "o", "i", "n", "s", "h", "r", "d", "l", "c", "u", "m", "w", "f", "g", "y", "p",
                          "b", "v", "k", "j", "x", "q", "z"]
@@ -317,15 +312,23 @@ while want_to_run_program_again:
         if user_has_key:
             # use general encode/decode function
             result = encode_decode_with_key(user_input, str_checker(user_input, letters), -key, letters)
+            extra_text = ""
         # if user doesn't have key
         else:
             # use special function
             result = decode_without_key(user_input, str_checker(user_input, letters), letters,
                                         letter_frequency(user_input, letters), standard_freq_letters)
+            likelihood = likelihood_of_outcome(result[2], standard_freq_letters, standard_freq_values)
+            extra_text = "\n\n" \
+                         " \033[1m| Likelihood of outcome: \033[0m\033[3m{}%\033[0m".format(likelihood)
         # print results
-        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n \033[1m| Original text:\033[0m\n | \033[3m"
-              "{}\033[0m\n\n \033[1m| Decoded text:\033[0m\n | \033[3m{}\033[0m"
-              .format(result[1], user_input, result[0]))
+        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m"
+              "\n\n"  # line break
+              " \033[1m| Original text:\033[0m\n | \033[3m{}\033[0m"
+              "\n\n"  # line break
+              " \033[1m| Decoded text:\033[0m\n | \033[3m{}\033[0m"
+              "{}"
+              .format(result[1], user_input, result[0], extra_text))
     # is user wants to encode text
     else:
         # if user has key
@@ -340,8 +343,11 @@ while want_to_run_program_again:
             # use general encode/decode function
             result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
         # print results
-        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n \033[1m| Original text:\033[0m\n | \033[3m"
-              "{}\033[0m\n\n \033[1m| Encoded text:\033[0m\n | \033[3m{}\033[0m"
+        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m"  # print key
+              "\n\n"  # line break
+              " \033[1m| Original text:\033[0m\n | \033[3m{}\033[0m"  # print original text
+              "\n\n"  # line break
+              " \033[1m| Encoded text:\033[0m\n | \033[3m{}\033[0m"  # print encoded text
               .format(result[1], user_input, result[0]))
     want_to_run_program_again = yes_no_checker("\n\n\033[1mDo you want to run this program again?\033[0m\nYes/no: ",
                                                "\n\033[3mRe-running program\033[0m",

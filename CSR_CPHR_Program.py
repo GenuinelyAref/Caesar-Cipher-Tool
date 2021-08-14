@@ -293,6 +293,8 @@ while want_to_run_program_again:
         text_function = input("\033[1mDo you want to encode or decode?\033[0m\nType here: ")
     # change the function to lowercase
     text_function = text_function.lower()
+    # print the function the user chose for confirmation
+    print("\n\033[3mYou chose to <{}>\033[0m".format(text_function))
 
     # Ask if user has key
     user_has_key = yes_no_checker("\n\033[1mDo you have a key to provide?\033[0m\nYes/no: ", "",

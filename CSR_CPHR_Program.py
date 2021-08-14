@@ -320,8 +320,8 @@ while want_to_run_program_again:
             result = decode_without_key(user_input, str_checker(user_input, letters), letters,
                                         letter_frequency(user_input, letters), standard_freq_letters)
         # print results
-        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
-              "{}\033[0m\n\n | \033[1mDecoded text:\033[0m\n | \033[3m{}\033[0m"
+        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n \033[1m| Original text:\033[0m\n | \033[3m"
+              "{}\033[0m\n\n \033[1m| Decoded text:\033[0m\n | \033[3m{}\033[0m"
               .format(result[1], user_input, result[0]))
     # is user wants to encode text
     else:
@@ -337,8 +337,8 @@ while want_to_run_program_again:
             # use general encode/decode function
             result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
         # print results
-        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n | \033[1mOriginal text:\033[0m\n | \033[3m"
-              "{}\033[0m\n\n | \033[1mEncoded text:\033[0m\n | \033[3m{}\033[0m"
+        print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m\n\n \033[1m| Original text:\033[0m\n | \033[3m"
+              "{}\033[0m\n\n \033[1m| Encoded text:\033[0m\n | \033[3m{}\033[0m"
               .format(result[1], user_input, result[0]))
     want_to_run_program_again = yes_no_checker("\n\n\033[1mDo you want to run this program again?\033[0m\nYes/no: ",
                                                "\033[3mRe-running program\033[0m",

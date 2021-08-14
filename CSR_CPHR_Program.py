@@ -22,33 +22,13 @@ def integer_check(var_num):
         return False
 
 
-# letter calling function - to call letters by their order in the alphabet
-def letter_call(var_letter_library, var_alphabet_order, var_case):
-    # find letter in english alphabet
-    letter = var_letter_library[(var_alphabet_order - 1) % 26]
-    if var_case == "uppercase":
-        # uppercase letter
-        return letter.upper()
-    elif var_case == "lowercase":
-        # lowercase letter
-        return letter
-
-
-# blank checking function - check that the input is not blank
-def not_blank(var_prompt, var_error_message):
-    # take input
-    var_user_input = input(var_prompt)
-    # check if input is blank / only spaces
-    while var_user_input.strip(" ") == "":
-        # print error message
-        print("{}\n".format(var_error_message))
-        # retake input
-        var_user_input = input(var_prompt)
-    return var_user_input
+# function that strips leading/trailing spaces from an input
+def strip_spaces(var_text):
+    return var_text.strip(" ")
 
 
 # string checker function - returns the positions of all decryptable/encryptable characters
-def str_checker(var_text, var_letter_library):
+def letter_position_finder(var_text, var_letter_library):
     # change all letters in the string to lowercase
     var_text = var_text.lower()
     letter_chars_location = []
@@ -75,14 +55,14 @@ def yes_no_checker(var_prompt, var_proceed_affirmative, var_proceed_negative):
     # repeat until answer given is either 'yes' or 'no'
     while not valid_two:
         # ask question
-        answer = input(var_prompt)
+        answer = strip_spaces(input(var_prompt))
         # change all letters in the string to lowercase
         answer = answer.lower()
-        if answer == "yes":
+        if answer == "yes" or answer == "y":
             # print matching statement
             print(var_proceed_affirmative)
             return True
-        elif answer == "no":
+        elif answer == "no" or answer == "n":
             # print matching statement
             print(var_proceed_negative)
             return False
@@ -277,18 +257,19 @@ while want_to_run_program_again:
         # explain why the prompt is repeated
         print("\n\n\033[3mPlease ensure that your text contains at least 1 letter\033[0m")
         # repeat prompt
-        user_input = input("Enter you text here: ")
+        user_input = strip_spaces(input("Enter you text here: "))
         # check that the text contains at least one letter
         user_text_valid = min_input(user_input, letters)
 
     # Ask user if they want to encode or decode
-    text_function = input("\n\033[1mDo you want to encode or decode?\033[0m\nType here: ")
+    text_function = strip_spaces(input("\n\033[1mDo you want to encode or decode?\033[0m\nType here: "))
     # If answer is not valid, ask again
-    while text_function.lower() != "encode" and text_function.lower() != "decode":
+    while text_function.lower() != "encode" and text_function.lower() != "decode" and text_function.lower() != "e"\
+            and text_function.lower() != "d":
         # error saying why it's invalid
-        print("\nSorry, that is not a valid answer. Type 'encode' or 'decode'\n")
+        print("\n\033[3mSorry, that is not a valid answer. Type 'encode' or 'decode'\033[0m\n")
         # repeat prompt
-        text_function = input("\033[1mDo you want to encode or decode?\033[0m\nType here: ")
+        text_function = strip_spaces(input("\033[1mDo you want to encode or decode?\033[0m\nType here: "))
     # change the function to lowercase
     text_function = text_function.lower()
     # print the function the user chose for confirmation
@@ -302,7 +283,7 @@ while want_to_run_program_again:
         valid_key = False
         while not valid_key:
             print("\n\033[3mMake sure your key is an integer\033[0m")
-            key = input("Enter your key here: ")
+            key = strip_spaces(input("Enter your key here: "))
             valid_key = integer_check(key)
         key = int(key)
 
@@ -311,12 +292,12 @@ while want_to_run_program_again:
         # if user has key
         if user_has_key:
             # use general encode/decode function
-            result = encode_decode_with_key(user_input, str_checker(user_input, letters), -key, letters)
+            result = encode_decode_with_key(user_input, letter_position_finder(user_input, letters), -key, letters)
             extra_text = ""
         # if user doesn't have key
         else:
             # use special function
-            result = decode_without_key(user_input, str_checker(user_input, letters), letters,
+            result = decode_without_key(user_input, letter_position_finder(user_input, letters), letters,
                                         letter_frequency(user_input, letters), standard_freq_letters)
             likelihood = likelihood_of_outcome(result[2], standard_freq_letters, standard_freq_values)
             extra_text = "\n\n" \
@@ -334,14 +315,14 @@ while want_to_run_program_again:
         # if user has key
         if user_has_key:
             # user general encode/decode function
-            result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
+            result = encode_decode_with_key(user_input, letter_position_finder(user_input, letters), key, letters)
         # if user doesn't have key
         else:
             # pick random key
             key = random_key_pick()
             print("\033[3mRandom key generated\033[0m")
             # use general encode/decode function
-            result = encode_decode_with_key(user_input, str_checker(user_input, letters), key, letters)
+            result = encode_decode_with_key(user_input, letter_position_finder(user_input, letters), key, letters)
         # print results
         print("\n\033[1m | Key: \033[0m\033[3m{}\033[0m"  # print key
               "\n\n"  # line break

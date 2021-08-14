@@ -175,6 +175,9 @@ def encode_decode_with_key(var_text, var_letter_indexes, var_key, var_letter_lib
     encoded_text = ""
     for i in range(0, len(var_text_list)):
         encoded_text += var_text_list[i]
+    # make sure printed key is positive after decoding
+    if var_key < 0:
+        var_key = abs(var_key)
     # return encoded string to user
     return [encoded_text, var_key]
 
@@ -341,5 +344,5 @@ while want_to_run_program_again:
               "{}\033[0m\n\n \033[1m| Encoded text:\033[0m\n | \033[3m{}\033[0m"
               .format(result[1], user_input, result[0]))
     want_to_run_program_again = yes_no_checker("\n\n\033[1mDo you want to run this program again?\033[0m\nYes/no: ",
-                                               "\033[3mRe-running program\033[0m",
-                                               "\033[3mThank you for using my program :)\033[0m")
+                                               "\n\033[3mRe-running program\033[0m",
+                                               "\n\033[3mThank you for using my program :)\033[0m")

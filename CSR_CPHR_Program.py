@@ -224,7 +224,9 @@ def instructions(var_condition_met):
     if not var_condition_met:
         print(instructions_text)
     else:
-        print("\033[3mSkipping instructions >>\033[0m")
+        print("\033[3mSkipping instructions >>"
+              "\n\n"
+              "If you wish to re-read the instructions, please see the README file for this repository\033[0m")
 
 
 # Lists/variables

@@ -1,10 +1,17 @@
 # Caesar Cipher Tool
 
-# LIBRARIES
+# ***************
+# ** LIBRARIES **
+# ***************
+
+# random library for generating key to encode when user doesn't have one
 import random
 
+# ***************
+# ** FUNCTIONS **
+# ***************
 
-# FUNCTIONS
+
 # random key-picking function - for encoding without key
 def random_key_pick():
     return random.randint(1, 25)
@@ -92,36 +99,49 @@ def min_input(var_raw_input, var_letter_library):
         return True
 
 
-# Function that finds letter order in alphabet and returns it
-def letter_order(var_letter, var_letter_library):
-    return var_letter_library.index(var_letter.lower()) + 1
-
-
 # Function that calculates the likelihood of the outcome
 def likelihood_of_outcome(var_letter, var_standard_letters, var_standard_values):
     # Find the order of the letter in the standard letter frequency table
     var_index = var_standard_letters.index(var_letter)
+    # percentage of likelihood is the standard frequency value for that letter
     percentage = var_standard_values[var_index]
+    # return value as a number
     return percentage
 
 
 # Letter frequency analysis tool
 def letter_frequency(var_text, var_letter_library):
-    var_text = var_text.lower()
+    # define variables used
     letter_frequency_dict = {}
+    # lowercase the string
+    var_text = var_text.lower()
+    # repeat for the length of the text
     for i in var_text:
+        # define key values of the dictionary
         keys = letter_frequency_dict.keys()
         try:
+            # try to find the alphabet letter in the string
             var_letter_library.index(i)
+            # now it is known that it can be found at least once
+            # if it's already in the dictionary (there's more than one of this letter)
             if i in keys:
+                # add one to its frequency
                 letter_frequency_dict[i] += 1
+            # if it's not in the dictionary
             else:
+                # set its value at 1
                 letter_frequency_dict[i] = 1
         except ValueError:
+            # know it is known that this alphabet letter is not in the string at least once
+            # do nothing - skip letter
             pass
+    # sort dictionary by the most frequent letters to the least frequent
     letter_frequency_dict = sorted(letter_frequency_dict.items(), key=lambda x: x[1], reverse=True)
+    # change into standard python dictionary format
     letter_frequency_dict = dict(letter_frequency_dict)
+    # change into list variable
     letter_list = list(letter_frequency_dict.keys())
+    # return most frequent letter (first in the list)
     return letter_list[0]
 
 
@@ -143,6 +163,7 @@ def encode_decode_with_key(var_text, var_letter_indexes, var_key, var_letter_lib
         except ValueError:
             # letter is now known to be uppercase
             letter_index = var_letter_library.index(current_char.lower())
+            # replace original character with new encrypted character
             calling_index = (letter_index + var_key) % 26
             new_char = var_letter_library[calling_index].upper()
         var_text_list[var_letter_indexes[i]] = new_char
@@ -160,6 +181,7 @@ def encode_decode_with_key(var_text, var_letter_indexes, var_key, var_letter_lib
 # Function to decode text using key
 def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_most_frequent_letter,
                        var_standard_freq_letters):
+    # define variables used
     decoded_text = ""
     var_key = 0
     # Set variable equal to number of letters (chars to decrypt/decrypt)
@@ -190,6 +212,7 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
                 new_char = var_letter_library[calling_index]
             except ValueError:
                 # letter is now known to be uppercase
+                # replace original character with new decrypted character
                 letter_index = var_letter_library.index(current_char.lower())
                 calling_index = (letter_index - var_key) % 26
                 new_char = var_letter_library[calling_index].upper()
@@ -197,6 +220,7 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
         # convert list back into a string
         for i in range(0, len(var_text_list)):
             decoded_text += var_text_list[i]
+        # check with user if text is correct
         correct_key = yes_no_checker("Is this the correct text?\033[1m\n{}\033[0m\n\nYes/no: ".format(decoded_text),
                                      "Success!", "\033[3m\ntrying again\033[0m\n")
         # if decoded text is claimed correct by the user, break loop
@@ -211,6 +235,7 @@ def decode_without_key(var_text, var_letter_indexes, var_letter_library, var_mos
 
 # Program instructions
 def instructions(var_condition_met):
+    # instructions text with external link
     instructions_text = "\033[1m | Here's a basic set of instructions on how to use this program: \033[0m\n\n" \
                         " | To use this tool, you will need to have a very basic understanding of Caesar Ciphers.\n" \
                         " | If you are unfamiliar with the concept, I highly recommend visiting this website\n" \
@@ -221,15 +246,22 @@ def instructions(var_condition_met):
                         " | any text without a given key in the least theoretical possible number of steps. You\n" \
                         " | will be required to enter the following information:\n\n | 1) text (can contain numbers, " \
                         "punctuation etc...)\n | 2) a key (if you have one)\n | 3) whether you want to encode or decode"
+    # If user hasn't used program before
     if not var_condition_met:
+        # show instructions text
         print(instructions_text)
+    # if user has used program before
     else:
+        # Skip instructions & inform user that they can refer to the README file for the instructions
         print("\033[3mSkipping instructions >>"
               "\n\n"
               "If you wish to re-read the instructions, please see the README file for this repository\033[0m")
 
 
-# Lists/variables
+# ***********************
+# ** LISTS / VARIABLES **
+# ***********************
+
 # english letters
 letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
            "t", "u", "v", "w", "x", "y", "z"]
@@ -239,15 +271,16 @@ standard_freq_letters = ["e", "t", "a", "o", "i", "n", "s", "h", "r", "d", "l", 
 # Standard letter frequency table (values)
 standard_freq_values = [12.702, 9.056, 8.167, 7.507, 6.966, 6.749, 6.327, 6.094, 5.987, 4.253, 4.025, 2.782, 2.758,
                         2.406, 2.36, 2.228, 2.015, 1.974, 1.929, 1.492, 0.978, 0.772, 0.153, 0.15, 0.095, 0.074]
+# Define variables used
 user_input = ""
 key = 0
 
-# MAIN ROUTINE
+# ******************
+# ** MAIN ROUTINE **
+# ******************
 
-# welcome message
-print("\033[1mWelcome to Caesar Cipher Tool\033[0m\n\n\n\n")
-# display/skip instructions
-want_instructions = yes_no_checker("Have you used this program before?\nYes/no: ", "", "")
+print("\033[1mWelcome to Caesar Cipher Tool\033[0m\n\n\n\n")  # welcome message
+want_instructions = yes_no_checker("Have you used this program before?\nYes/no: ", "", "")  # display/skip instructions
 instructions(want_instructions)
 
 want_to_run_program_again = True
@@ -286,11 +319,17 @@ while want_to_run_program_again:
                                   "\n\033[3mNo key given\033[0m")
     # If user has key, ask them for it
     if user_has_key:
+        # define used variables
         valid_key = False
+        # repeat until key is valid
         while not valid_key:
+            # error/warning message
             print("\n\033[3mMake sure your key is an integer\033[0m")
+            # ask user for key
             key = strip_spaces(input("Enter your key here: "))
+            # check if key is valid (can be an integer)
             valid_key = integer_check(key)
+        # convert key to integer value
         key = int(key)
 
     # is user wants to decode text
@@ -339,3 +378,6 @@ while want_to_run_program_again:
     want_to_run_program_again = yes_no_checker("\n\n\033[1mDo you want to run this program again?\033[0m\nYes/no: ",
                                                "\n\033[3mRe-running program\033[0m",
                                                "\n\033[3mThank you for using my program :)\033[0m")
+    # ***********
+    # end of code
+    # ***********
